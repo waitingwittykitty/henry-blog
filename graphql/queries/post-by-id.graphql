@@ -1,0 +1,5 @@
+query PostById($postByIdId: Int) {
+  postById(id: $postByIdId) {
+    ...PostDetailsFragment
+  }
+}

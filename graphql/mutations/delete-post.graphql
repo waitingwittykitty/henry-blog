@@ -1,0 +1,17 @@
+mutation DeletePost($deletePostId: Int!) {
+  deletePost(id: $deletePostId) {
+    id
+    createdAt
+    updatedAt
+    title
+    content
+    published
+    viewCount
+    author {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+}

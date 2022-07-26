@@ -1,0 +1,5 @@
+mutation TogglePublishPost($togglePublishPostId: Int!) {
+  togglePublishPost(id: $togglePublishPostId) {
+    ...PostDetailsFragment
+  }
+}

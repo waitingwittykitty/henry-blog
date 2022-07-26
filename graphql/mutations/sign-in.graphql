@@ -1,0 +1,8 @@
+mutation SignIn($loginEmail2: String!, $loginPassword2: String!) {
+  login(email: $loginEmail2, password: $loginPassword2) {
+    token
+    user {
+      ...UserDetailsFragment
+    }
+  }
+}

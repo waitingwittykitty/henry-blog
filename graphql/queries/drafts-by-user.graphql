@@ -1,0 +1,5 @@
+query DraftsByUser($userUniqueInput: UserUniqueInput!) {
+  draftsByUser(userUniqueInput: $userUniqueInput) {
+    ...PostDetailsFragment
+  }
+}

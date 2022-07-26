@@ -1,0 +1,17 @@
+mutation IncreasePostViewCount($incrementPostViewCountId: Int!) {
+  incrementPostViewCount(id: $incrementPostViewCountId) {
+    id
+    createdAt
+    updatedAt
+    title
+    content
+    published
+    viewCount
+    author {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+}

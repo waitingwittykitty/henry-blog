@@ -1,0 +1,17 @@
+mutation CreateDraft($data: PostCreateInput!) {
+  createDraft(data: $data) {
+    id
+    createdAt
+    updatedAt
+    title
+    content
+    published
+    viewCount
+    author {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+}

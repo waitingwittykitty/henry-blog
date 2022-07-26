@@ -1,0 +1,10 @@
+query Feed(
+  $searchString: String
+  $skip: Int
+  $take: Int
+  $orderBy: PostOrderByUpdatedAtInput
+) {
+  feed(searchString: $searchString, skip: $skip, take: $take, orderBy: $orderBy) {
+    ...PostDetailsFragment
+  }
+}
