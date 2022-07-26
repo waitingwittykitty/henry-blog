@@ -1,3 +1,8 @@
 {
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "prettier.arrowParens": "avoid",
+  "prettier.printWidth": 90,
+  "prettier.singleQuote": true,
+  "cSpell.words": ["clsx", "heroicons", "testid"],
+  "cSpell.ignoreWords": ["signup"]
 }
