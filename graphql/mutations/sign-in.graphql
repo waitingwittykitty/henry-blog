@@ -4,5 +4,10 @@ mutation SignIn($loginEmail2: String!, $loginPassword2: String!) {
     user {
       ...UserDetailsFragment
     }
+    errors {
+      field
+      message
+      code
+    }
   }
 }

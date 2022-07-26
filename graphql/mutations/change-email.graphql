@@ -4,5 +4,10 @@ mutation ChangeEmail($newEmail: String!, $password: String!, $redirectUrl: Strin
     user {
       ...UserDetailsFragment
     }
+    errors {
+      field
+      message
+      code
+    }
   }
 }

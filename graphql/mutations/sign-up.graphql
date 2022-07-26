@@ -9,5 +9,10 @@ mutation SignUp(
     user {
       ...UserDetailsFragment
     }
+    errors {
+      field
+      message
+      code
+    }
   }
 }
