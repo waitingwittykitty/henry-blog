@@ -1,0 +1,8 @@
+mutation ChangeEmail($newEmail: String!, $password: String!, $redirectUrl: String) {
+  changeEmail(newEmail: $newEmail, password: $password, redirectUrl: $redirectUrl) {
+    token
+    user {
+      ...UserDetailsFragment
+    }
+  }
+}
