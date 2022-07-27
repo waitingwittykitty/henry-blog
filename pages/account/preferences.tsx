@@ -5,15 +5,19 @@ import { PasswordPreferences } from '@/components/account-preferences/password-p
 
 function AccountPreferencesPage() {
   return (
-    <div className="grid grid-cols-2">
-      <div className="drop-shadow m-5 p-10">
-        <EmailPreferences />
-      </div>
+    <section className="">
+      <h2 className="font-mono text-xl mt-8 ml-20">Account Preferences</h2>
 
-      <div className="drop-shadow m-5 p-10">
-        <PasswordPreferences />
+      <div className="grid grid-cols-2">
+        <div className="drop-shadow m-5 px-20">
+          <EmailPreferences />
+        </div>
+
+        <div className="drop-shadow m-5 px-20">
+          <PasswordPreferences />
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 
