@@ -9,6 +9,15 @@ import { usePaths } from '@/libs/paths';
 import { Box } from '../box';
 import menu from './footer-menu.json';
 
+type MenuItem = {
+  id: string;
+  url?: string;
+  name: string;
+  children?: MenuItem[];
+};
+
+const menuItems = menu as MenuItem[];
+
 export type FooterProps = HTMLAttributes<HTMLElement>;
 
 export function Footer({ className, ...rest }: FooterProps) {
@@ -38,7 +47,7 @@ export function Footer({ className, ...rest }: FooterProps) {
           </Link>
 
           <div className="grid grid-cols-2 gap-[2rem] w-full sm:w-auto sm:flex sm:flex-wrap sm:justify-end sm:ml-auto">
-            {menu.map(item => (
+            {menuItems.map(item => (
               <div className="sm:ml-14" key={item?.id}>
                 {item?.url ? (
                   <a
@@ -59,33 +68,36 @@ export function Footer({ className, ...rest }: FooterProps) {
                     </a>
                   </Link>
                 )}
-                <ul className="list-none mb-8">
-                  {item?.children?.map(sub => (
-                    <li key={sub?.id}>
-                      {sub?.url ? (
-                        <a
-                          href={sub.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-base cursor-pointer hover:underline"
-                          data-testid={`footerExternalLinks${sub?.name}`}
-                        >
-                          {sub?.name}
-                        </a>
-                      ) : (
-                        <Link href={getLinkPath(sub!)} passHref>
+
+                {!!item?.children && (
+                  <ul className="list-none mb-8">
+                    {item.children.map(sub => (
+                      <li key={sub?.id}>
+                        {sub?.url ? (
                           <a
-                            href="pass"
+                            href={sub.url}
+                            target="_blank"
+                            rel="noreferrer"
                             className="text-base cursor-pointer hover:underline"
-                            data-testid={`footerInternalLinks${sub?.name}`}
+                            data-testid={`footerExternalLinks${sub?.name}`}
                           >
                             {sub?.name}
                           </a>
-                        </Link>
-                      )}
-                    </li>
-                  ))}
-                </ul>
+                        ) : (
+                          <Link href={getLinkPath(sub!)} passHref>
+                            <a
+                              href="pass"
+                              className="text-base cursor-pointer hover:underline"
+                              data-testid={`footerInternalLinks${sub?.name}`}
+                            >
+                              {sub?.name}
+                            </a>
+                          </Link>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           </div>
