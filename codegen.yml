@@ -1,6 +1,6 @@
 overwrite: true
 schema:
-  - ${GRAPHQL_SERVER}
+  - ${NEXT_PUBLIC_GRAPHQL_SERVER}
 documents: 'graphql/**/*.{ts,graphql}'
 generates:
   api/index.ts:
