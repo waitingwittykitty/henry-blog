@@ -1,16 +1,9 @@
 import Link from 'next/link';
 
-import { getLinkPath } from '@/libs/menus';
-
-type MenuItem = {
-  id: string;
-  url?: string;
-  name: string;
-  children?: MenuItem[];
-};
+import { MenuItemFragment } from '@/libs/menus';
 
 interface NavigationAnchorProps {
-  menuItem: MenuItem;
+  menuItem: MenuItemFragment;
   className: string;
 }
 
@@ -30,7 +23,7 @@ export function NavigationAnchor({ menuItem, className }: NavigationAnchorProps)
   }
 
   return (
-    <Link href={getLinkPath(menuItem)} passHref>
+    <Link href={menuItem.path ?? '/'} passHref>
       <a href="pass" className={className} data-testid={`categoriesList${menuItem.name}`}>
         {menuItem.name}
       </a>

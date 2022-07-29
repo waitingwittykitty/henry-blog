@@ -3,26 +3,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { HTMLAttributes } from 'react';
 
-import { getLinkPath } from '@/libs/menus';
-import { usePaths } from '@/libs/paths';
+import { MenuItemFragment } from '@/libs/menus';
 
 import { Box } from '../box';
 import menu from './footer-menu.json';
 
-type MenuItem = {
-  id: string;
-  url?: string;
-  name: string;
-  children?: MenuItem[];
-};
-
-const menuItems = menu as MenuItem[];
+const menuItems = menu as MenuItemFragment[];
 
 export type FooterProps = HTMLAttributes<HTMLElement>;
 
 export function Footer({ className, ...rest }: FooterProps) {
-  const paths = usePaths();
-
   return (
     <footer
       className={clsx('sm:container mx-auto mb-18 sm:mb-15 mt-16', className)}
@@ -30,9 +20,9 @@ export function Footer({ className, ...rest }: FooterProps) {
     >
       <Box className="p-6 border-l-0 border-r-0 sm:border-l-2 sm:border-r-2">
         <div className="flex mb-14 sm:mb-10">
-          <Link href={paths.$url()} passHref>
+          <Link href="/" passHref>
             <a href="pass" className="hidden sm:inline-block">
-              <div className="mt-px flex items-center block relative grayscale">
+              <div className="mt-px flex items-center relative grayscale">
                 <Image
                   src="/eye.png"
                   alt="Henry Blog logo"
@@ -46,7 +36,12 @@ export function Footer({ className, ...rest }: FooterProps) {
             </a>
           </Link>
 
-          <div className="grid grid-cols-2 gap-[2rem] w-full sm:w-auto sm:flex sm:flex-wrap sm:justify-end sm:ml-auto">
+          <div
+            className={clsx(
+              'grid grid-cols-2 gap-[2rem] w-full sm:w-auto sm:flex sm:flex-wrap',
+              'sm:justify-end sm:ml-auto'
+            )}
+          >
             {menuItems.map(item => (
               <div className="sm:ml-14" key={item?.id}>
                 {item?.url ? (
@@ -54,15 +49,19 @@ export function Footer({ className, ...rest }: FooterProps) {
                     href={item.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="block text-md font-bold mb-4 cursor-pointer hover:underline"
+                    className={clsx(
+                      'block text-md font-bold mb-4 cursor-pointer hover:underline'
+                    )}
                   >
                     {item?.name}
                   </a>
                 ) : (
-                  <Link href={getLinkPath(item!)} passHref>
+                  <Link href={item.path!} passHref>
                     <a
                       href="pass"
-                      className="block text-md font-bold mb-4 cursor-pointer hover:underline"
+                      className={clsx(
+                        'block text-md font-bold mb-4 cursor-pointer hover:underline'
+                      )}
                     >
                       {item?.name}
                     </a>
@@ -84,7 +83,7 @@ export function Footer({ className, ...rest }: FooterProps) {
                             {sub?.name}
                           </a>
                         ) : (
-                          <Link href={getLinkPath(sub!)} passHref>
+                          <Link href={sub.path!} passHref>
                             <a
                               href="pass"
                               className="text-base cursor-pointer hover:underline"
