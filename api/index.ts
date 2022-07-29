@@ -146,6 +146,7 @@ export type SortOrder =
 
 export type User = {
   __typename?: 'User';
+  avatar?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   firstName?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
@@ -167,7 +168,7 @@ export type UserUniqueInput = {
 
 export type PostDetailsFragment = { __typename?: 'Post', id: number, createdAt: any, updatedAt: any, title: string, content?: string | null, published: boolean, viewCount: number, author?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string } | null };
 
-export type UserDetailsFragment = { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string };
+export type UserDetailsFragment = { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string, avatar?: string | null };
 
 export type ChangeEmailMutationVariables = Exact<{
   newEmail: Scalars['String'];
@@ -176,7 +177,7 @@ export type ChangeEmailMutationVariables = Exact<{
 }>;
 
 
-export type ChangeEmailMutation = { __typename?: 'Mutation', changeEmail?: { __typename?: 'AuthPayload', token?: string | null, user?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string } | null, errors?: Array<{ __typename?: 'ErrorPayload', field?: string | null, message?: string | null, code?: string | null } | null> | null } | null };
+export type ChangeEmailMutation = { __typename?: 'Mutation', changeEmail?: { __typename?: 'AuthPayload', token?: string | null, user?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string, avatar?: string | null } | null, errors?: Array<{ __typename?: 'ErrorPayload', field?: string | null, message?: string | null, code?: string | null } | null> | null } | null };
 
 export type ChangePasswordMutationVariables = Exact<{
   oldPassword: Scalars['String'];
@@ -184,7 +185,7 @@ export type ChangePasswordMutationVariables = Exact<{
 }>;
 
 
-export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword?: { __typename?: 'AuthPayload', token?: string | null, user?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string } | null, errors?: Array<{ __typename?: 'ErrorPayload', field?: string | null, message?: string | null, code?: string | null } | null> | null } | null };
+export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword?: { __typename?: 'AuthPayload', token?: string | null, user?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string, avatar?: string | null } | null, errors?: Array<{ __typename?: 'ErrorPayload', field?: string | null, message?: string | null, code?: string | null } | null> | null } | null };
 
 export type CreateDraftMutationVariables = Exact<{
   data: PostCreateInput;
@@ -213,7 +214,7 @@ export type SignInMutationVariables = Exact<{
 }>;
 
 
-export type SignInMutation = { __typename?: 'Mutation', login?: { __typename?: 'AuthPayload', token?: string | null, user?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string } | null, errors?: Array<{ __typename?: 'ErrorPayload', field?: string | null, message?: string | null, code?: string | null } | null> | null } | null };
+export type SignInMutation = { __typename?: 'Mutation', login?: { __typename?: 'AuthPayload', token?: string | null, user?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string, avatar?: string | null } | null, errors?: Array<{ __typename?: 'ErrorPayload', field?: string | null, message?: string | null, code?: string | null } | null> | null } | null };
 
 export type SignUpMutationVariables = Exact<{
   email: Scalars['String'];
@@ -223,7 +224,7 @@ export type SignUpMutationVariables = Exact<{
 }>;
 
 
-export type SignUpMutation = { __typename?: 'Mutation', signup?: { __typename?: 'AuthPayload', token?: string | null, user?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string } | null, errors?: Array<{ __typename?: 'ErrorPayload', field?: string | null, message?: string | null, code?: string | null } | null> | null } | null };
+export type SignUpMutation = { __typename?: 'Mutation', signup?: { __typename?: 'AuthPayload', token?: string | null, user?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string, avatar?: string | null } | null, errors?: Array<{ __typename?: 'ErrorPayload', field?: string | null, message?: string | null, code?: string | null } | null> | null } | null };
 
 export type TogglePublishPostMutationVariables = Exact<{
   togglePublishPostId: Scalars['Int'];
@@ -235,12 +236,12 @@ export type TogglePublishPostMutation = { __typename?: 'Mutation', togglePublish
 export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllUsersQuery = { __typename?: 'Query', allUsers: Array<{ __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string }> };
+export type AllUsersQuery = { __typename?: 'Query', allUsers: Array<{ __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string, avatar?: string | null }> };
 
 export type CurrentUserDetailsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentUserDetailsQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string } | null };
+export type CurrentUserDetailsQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string, avatar?: string | null } | null };
 
 export type DraftsByUserQueryVariables = Exact<{
   userUniqueInput: UserUniqueInput;
@@ -289,6 +290,7 @@ export const UserDetailsFragmentDoc = gql`
   firstName
   lastName
   email
+  avatar
 }
     `;
 export const ChangeEmailDocument = gql`
@@ -853,8 +855,9 @@ export type QueryFieldPolicy = {
 	me?: FieldPolicy<any> | FieldReadFunction<any>,
 	postById?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type UserKeySpecifier = ('email' | 'firstName' | 'id' | 'lastName' | 'posts' | UserKeySpecifier)[];
+export type UserKeySpecifier = ('avatar' | 'email' | 'firstName' | 'id' | 'lastName' | 'posts' | UserKeySpecifier)[];
 export type UserFieldPolicy = {
+	avatar?: FieldPolicy<any> | FieldReadFunction<any>,
 	email?: FieldPolicy<any> | FieldReadFunction<any>,
 	firstName?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,

@@ -3,4 +3,5 @@ fragment UserDetailsFragment on User {
   firstName
   lastName
   email
+  avatar
 }
