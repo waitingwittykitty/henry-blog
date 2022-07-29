@@ -5,7 +5,7 @@ import { PasswordPreferences } from '@/components/account-preferences/password-p
 
 function AccountPreferencesPage() {
   return (
-    <section className="">
+    <section>
       <h2 className="font-mono text-xl mt-8 ml-20">Account Preferences</h2>
 
       <div className="grid grid-cols-2">
