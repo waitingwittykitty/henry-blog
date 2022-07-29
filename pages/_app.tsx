@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { ApolloProvider } from '@apollo/client';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,6 +12,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
       <>
+        <Head>
+          <title>Henry Blog</title>
+        </Head>
+
         <Layout>
           <Component {...pageProps} />
         </Layout>
