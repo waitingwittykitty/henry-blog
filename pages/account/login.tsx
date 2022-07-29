@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { ErrorOption, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { usePaths } from '@/libs/paths';
 import { CurrentUserDetailsDocument, useSignInMutation } from '@/api';
 
 export type OptionalQuery = {
@@ -20,7 +19,6 @@ export interface LoginFormData {
 function LoginPage() {
   const client = useApolloClient();
   const router = useRouter();
-  const paths = usePaths();
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [signInMutation] = useSignInMutation();
@@ -32,7 +30,7 @@ function LoginPage() {
     setError: setErrorForm,
   } = useForm<LoginFormData>();
 
-  const redirectURL = router.query.next?.toString() || paths.$url();
+  const redirectURL = router.query.next?.toString() || '/';
 
   const handleLogin = handleSubmitForm(async (formData: LoginFormData) => {
     const { data } = await signInMutation({
@@ -125,7 +123,7 @@ function LoginPage() {
             </form>
 
             <p className="mt-8">
-              <Link href={paths.account.register.$url()} passHref>
+              <Link href="/account/register" passHref>
                 <a href="pass">Register a new account</a>
               </Link>
             </p>
