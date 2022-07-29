@@ -1,18 +1,10 @@
 import Link from 'next/link';
 
-import { getLinkPath } from '@/libs/menus';
+import { MenuItemFragment } from '@/libs/menus';
 
 import { NavigationAnchor } from '../navigation-anchor/navigation-anchor';
-
-type MenuItem = {
-  id: string;
-  name: string;
-  url: string;
-  children?: MenuItem[];
-};
-
 interface DropdownProps {
-  menuItem: MenuItem;
+  menuItem: MenuItemFragment;
 }
 
 function Dropdown({ menuItem }: DropdownProps) {
@@ -39,7 +31,7 @@ function Dropdown({ menuItem }: DropdownProps) {
                       {item?.name}
                     </a>
                   ) : (
-                    <Link href={getLinkPath(item!)} passHref>
+                    <Link href={item?.path!} passHref>
                       <a
                         href="pass"
                         className="inline-block text-[1.8rem] leading-[2.16rem] font-bold cursor-pointer hover:underline"
@@ -52,7 +44,7 @@ function Dropdown({ menuItem }: DropdownProps) {
                     <ul className="list-none mt-3">
                       {item?.children?.map(sub => (
                         <li key={sub?.id}>
-                          <Link href={getLinkPath(sub!)} passHref>
+                          <Link href={sub?.path!} passHref>
                             <a
                               href="pass"
                               className="text-base text-main-2 cursor-pointer hover:underline"

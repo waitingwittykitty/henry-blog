@@ -4,14 +4,12 @@ import React from 'react';
 import clsx from 'clsx';
 
 import { useCurrentUserDetailsQuery } from '@/api';
-import { usePaths } from '@/libs/paths';
 import { Menu } from './menu';
 import NavIconButton from './nav-icon-button';
 import UserMenu from './user-menu';
 import Spinner from '../spinner';
 
 export function Navbar() {
-  const paths = usePaths();
   const { data, loading } = useCurrentUserDetailsQuery({});
 
   if (loading) {
@@ -24,14 +22,14 @@ export function Navbar() {
     <div
       className={clsx(
         'sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500',
-        'lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white',
-        'supports-backdrop-blur:bg-white/95 dark:bg-slate-900/75'
+        'lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-slate-50/75',
+        'backdrop-blur dark:bg-slate-900/75'
       )}
     >
       <div className="max-w-8xl mx-auto">
         <div className="py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
           <div className="relative flex items-center">
-            <Link href={paths.$url()} passHref>
+            <Link href="/" passHref>
               <a
                 href="pass"
                 className="mr-3 flex items-center w-[2.0625rem] overflow-hidden md:w-auto"
@@ -54,7 +52,7 @@ export function Navbar() {
               <Menu />
 
               <div className="flex items-center border-l border-slate-200 ml-6 pl-6 dark:border-slate-800">
-                <Link href={paths.search.$url()} passHref>
+                <Link href="/search" passHref>
                   <a href="pass">
                     <NavIconButton icon="spyglass" data-testid="searchIcon" />
                   </a>
@@ -67,7 +65,7 @@ export function Navbar() {
                 </a>
 
                 {isAnonymousUser ? (
-                  <Link href={paths.account.login.$url()} passHref>
+                  <Link href="/account/login" passHref>
                     <a href="pass" className="ml-6">
                       <NavIconButton icon="user" aria-hidden="true" />
                     </a>

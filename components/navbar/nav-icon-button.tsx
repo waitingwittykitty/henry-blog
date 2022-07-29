@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 import React, { ButtonHTMLAttributes } from 'react';
 
-import Bag from './icons/bag-icon.svg';
-import Close from './icons/close-icon.svg';
-import MenuIcon from './icons/menu-icon.svg';
-import Spyglass from './icons/spyglass-icon.svg';
-import User from './icons/user-icon.svg';
-import GitHub from './icons/github-icon.svg';
+import Bag from '../icons/bag-icon.svg';
+import Close from '../icons/close-icon.svg';
+import MenuIcon from '../icons/menu-icon.svg';
+import Spyglass from '../icons/spyglass-icon.svg';
+import User from '../icons/user-icon.svg';
+import GitHub from '../icons/github-icon.svg';
 
 interface NavIconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: 'user' | 'bag' | 'spyglass' | 'menu' | 'close' | 'github';
