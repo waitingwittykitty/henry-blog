@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import ContentEditor from '@/components/content-editor';
-import { PostCreateInput, useCreateDraftMutation } from '@/api';
+import { FeedDocument, PostCreateInput, useCreateDraftMutation } from '@/api';
 
 function PostCreate() {
   const router = useRouter();
@@ -15,14 +15,14 @@ function PostCreate() {
     register,
     handleSubmit: submitWrapper,
     formState: { errors },
-    setError,
   } = useForm<PostCreateInput>();
 
   const handleSubmit = submitWrapper(async (formData: PostCreateInput) => {
-    const { data } = await createDraftMutation({
+    await createDraftMutation({
       variables: {
         data: formData,
       },
+      refetchQueries: [{ query: FeedDocument }],
     });
 
     toast.success('New post created!');
