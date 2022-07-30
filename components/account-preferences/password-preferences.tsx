@@ -34,8 +34,8 @@ export function PasswordPreferences() {
 
       if (mutationErrors.length > 0) {
         mutationErrors.forEach(e =>
-          setError(e.field as keyof PasswordChangeFormData, {
-            message: e.message || '',
+          setError(e?.field as keyof PasswordChangeFormData, {
+            message: e?.message || '',
           })
         );
       } else if (result.data?.changePassword?.user) {
