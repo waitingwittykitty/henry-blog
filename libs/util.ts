@@ -64,15 +64,14 @@ export const composeDateTimeDiff = (date: Date | string): string => {
 
   for (let format of DIFF_FORMATS) {
     const diffSize = diff[format[0] as DurationUnit]!;
+    const roundedDiff = Math.round(Math.abs(diffSize));
 
-    if (diffSize !== 0) {
+    if (roundedDiff !== 0) {
       if (diffSize === 1 || diffSize === -1) {
         return format.at(diffSize)!;
       }
 
-      return `${Math.round(Math.abs(diffSize))} ${format[0]} ${
-        diffSize < 0 ? 'from now' : 'ago'
-      }`;
+      return `${roundedDiff} ${format[0]} ${diffSize < 0 ? 'from now' : 'ago'}`;
     }
   }
 
