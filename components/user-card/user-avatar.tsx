@@ -7,6 +7,7 @@ export interface UserAvatarProps {
   user: UserDetailsFragment;
   width?: number;
   height?: number;
+  className?: string;
 }
 
 function UserAvatar({ user, ...rest }: UserAvatarProps) {

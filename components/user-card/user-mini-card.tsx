@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'clsx';
 
 import { UserDetailsFragment } from '@/api';
 import { composeFullName } from '@/libs/util';
@@ -12,8 +13,12 @@ export interface UserMiniCardProps {
 function UserMiniCard({ user, children }: UserMiniCardProps) {
   return (
     <div>
-      <div className="flex">
-        <UserAvatar width={78} height={78} user={user} />
+      <div
+        className={classNames(
+          'flex text-white uppercase border-b-2 border-b-sky-800 pb-3 mb-3 items-center'
+        )}
+      >
+        <UserAvatar className="mr-6" width={78} height={78} user={user} />
 
         <a>{composeFullName(user?.firstName!, user?.lastName!)}</a>
       </div>
