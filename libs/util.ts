@@ -70,7 +70,9 @@ export const composeDateTimeDiff = (date: Date | string): string => {
         return format.at(diffSize)!;
       }
 
-      return `${Math.abs(diffSize)} ${format[0]} ${diffSize < 0 ? 'from now' : 'ago'}`;
+      return `${Math.round(Math.abs(diffSize))} ${format[0]} ${
+        diffSize < 0 ? 'from now' : 'ago'
+      }`;
     }
   }
 
