@@ -1,4 +1,5 @@
 .next
 api/index.tsx
 graphql.schema.json
-libs/$path.ts
+storybook-static
+.eslintrc
