@@ -1,10 +1,10 @@
 import Link from 'next/link';
+import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { usePaths } from '@/libs/paths';
 import { useSignUpMutation } from '@/api';
 
 export interface RegisterFormData {
@@ -16,7 +16,6 @@ export interface RegisterFormData {
 
 function RegisterPage() {
   const router = useRouter();
-  const paths = usePaths();
 
   const [signUpMutation] = useSignUpMutation({});
   const {
@@ -39,20 +38,19 @@ function RegisterPage() {
       const token = data?.signup?.token;
 
       if (!token) {
-        // Unable to sign in.
-        // data?.signup?.errors.forEach(e => {
-        //   if (e.field === 'email') {
-        //     setErrorForm('email', { message: e.message! });
-        //   } else if (e.field === 'password') {
-        //     setErrorForm('password', { message: e.message! });
-        //   } else {
-        //     console.error('Registration error:', e);
-        //   }
-        // });
+        data?.signup?.errors!.forEach(e => {
+          if (e?.field === 'email') {
+            setErrorForm('email', { message: e.message! });
+          } else if (e?.field === 'password') {
+            setErrorForm('password', { message: e.message! });
+          } else {
+            console.error('Registration error:', e);
+          }
+        });
         return;
       }
 
-      router.push(paths.$url());
+      router.push('/');
     } catch (err) {
       let errorMessage = '';
 
@@ -78,7 +76,7 @@ function RegisterPage() {
 
               <div className="my-3">
                 <label htmlFor="email" className="block text-md mb-2">
-                  Fist Name
+                  First Name
                 </label>
 
                 <input
@@ -161,14 +159,17 @@ function RegisterPage() {
               <div>
                 <button
                   type="submit"
-                  className="mt-4 mb-3 w-full bg-green-500 hover:bg-green-400 text-white py-2 rounded-md transition duration-100"
+                  className={clsx(
+                    'mt-4 mb-3 w-full bg-green-500 hover:bg-green-400 text-white py-2',
+                    'rounded-md transition duration-100'
+                  )}
                 >
                   Register
                 </button>
               </div>
             </form>
             <p className="mt-8">
-              <Link href={paths.account.login.$url()} passHref>
+              <Link href="/account/login" passHref>
                 <a href="pass">Log in to existing account</a>
               </Link>
             </p>
