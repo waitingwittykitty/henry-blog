@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useCurrentUserDetailsQuery, useFeedQuery } from '@/api';
 import Sidebar from '@/components/sidebar';
 import NoData from '@/components/no-data';
-import PostList from '@/components/post-list';
+import PostCard from '@/components/post-card';
 import { Spinner } from '@/components';
 
 function Posts() {
@@ -38,7 +38,17 @@ function Posts() {
 
         <div>
           {loading && <Spinner />}
-          {hasNoData ? <NoData caption="No Posts" /> : <PostList data={data?.feed} />}
+          {hasNoData ? (
+            <NoData caption="No Posts" />
+          ) : (
+            <ul>
+              {data?.feed!.map(post => (
+                <li key={post.id} className="mb-5">
+                  <PostCard post={post} />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
     </section>
