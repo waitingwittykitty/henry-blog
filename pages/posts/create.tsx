@@ -33,7 +33,7 @@ function PostCreate() {
     <section>
       <h1 className="text-2xl p-5">Create Post</h1>
 
-      <form action="/post/create" onSubmit={handleSubmit}>
+      <form action="/posts/create" onSubmit={handleSubmit}>
         <div className="mb-4">
           <div className="flex items-center">
             <label className="mr-2" htmlFor="title">
