@@ -43,6 +43,7 @@ export type Mutation = {
   login?: Maybe<AuthPayload>;
   signup?: Maybe<AuthPayload>;
   togglePublishPost?: Maybe<Post>;
+  updatePost?: Maybe<Post>;
 };
 
 
@@ -92,6 +93,12 @@ export type MutationTogglePublishPostArgs = {
   id: Scalars['Int'];
 };
 
+
+export type MutationUpdatePostArgs = {
+  data: PostUpdateInput;
+  id: Scalars['Int'];
+};
+
 export type Post = {
   __typename?: 'Post';
   author?: Maybe<User>;
@@ -111,6 +118,11 @@ export type PostCreateInput = {
 
 export type PostOrderByUpdatedAtInput = {
   updatedAt: SortOrder;
+};
+
+export type PostUpdateInput = {
+  content?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
 };
 
 export type Query = {
@@ -232,6 +244,14 @@ export type TogglePublishPostMutationVariables = Exact<{
 
 
 export type TogglePublishPostMutation = { __typename?: 'Mutation', togglePublishPost?: { __typename?: 'Post', id: number, createdAt: any, updatedAt: any, title: string, content?: string | null, published: boolean, viewCount: number, author?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string } | null } | null };
+
+export type UpdatePostMutationVariables = Exact<{
+  updatePostId: Scalars['Int'];
+  data: PostUpdateInput;
+}>;
+
+
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typename?: 'Post', id: number, createdAt: any, updatedAt: any, title: string, content?: string | null, published: boolean, viewCount: number, author?: { __typename?: 'User', id: number, firstName?: string | null, lastName?: string | null, email: string } | null } | null };
 
 export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -637,6 +657,52 @@ export function useTogglePublishPostMutation(baseOptions?: Apollo.MutationHookOp
 export type TogglePublishPostMutationHookResult = ReturnType<typeof useTogglePublishPostMutation>;
 export type TogglePublishPostMutationResult = Apollo.MutationResult<TogglePublishPostMutation>;
 export type TogglePublishPostMutationOptions = Apollo.BaseMutationOptions<TogglePublishPostMutation, TogglePublishPostMutationVariables>;
+export const UpdatePostDocument = gql`
+    mutation UpdatePost($updatePostId: Int!, $data: PostUpdateInput!) {
+  updatePost(id: $updatePostId, data: $data) {
+    id
+    createdAt
+    updatedAt
+    title
+    content
+    published
+    viewCount
+    author {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+}
+    `;
+export type UpdatePostMutationFn = Apollo.MutationFunction<UpdatePostMutation, UpdatePostMutationVariables>;
+
+/**
+ * __useUpdatePostMutation__
+ *
+ * To run a mutation, you first call `useUpdatePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePostMutation, { data, loading, error }] = useUpdatePostMutation({
+ *   variables: {
+ *      updatePostId: // value for 'updatePostId'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdatePostMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePostMutation, UpdatePostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument, options);
+      }
+export type UpdatePostMutationHookResult = ReturnType<typeof useUpdatePostMutation>;
+export type UpdatePostMutationResult = Apollo.MutationResult<UpdatePostMutation>;
+export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMutation, UpdatePostMutationVariables>;
 export const AllUsersDocument = gql`
     query AllUsers {
   allUsers {
@@ -825,7 +891,7 @@ export type ErrorPayloadFieldPolicy = {
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationKeySpecifier = ('changeEmail' | 'changePassword' | 'createDraft' | 'deletePost' | 'incrementPostViewCount' | 'login' | 'signup' | 'togglePublishPost' | MutationKeySpecifier)[];
+export type MutationKeySpecifier = ('changeEmail' | 'changePassword' | 'createDraft' | 'deletePost' | 'incrementPostViewCount' | 'login' | 'signup' | 'togglePublishPost' | 'updatePost' | MutationKeySpecifier)[];
 export type MutationFieldPolicy = {
 	changeEmail?: FieldPolicy<any> | FieldReadFunction<any>,
 	changePassword?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -834,7 +900,8 @@ export type MutationFieldPolicy = {
 	incrementPostViewCount?: FieldPolicy<any> | FieldReadFunction<any>,
 	login?: FieldPolicy<any> | FieldReadFunction<any>,
 	signup?: FieldPolicy<any> | FieldReadFunction<any>,
-	togglePublishPost?: FieldPolicy<any> | FieldReadFunction<any>
+	togglePublishPost?: FieldPolicy<any> | FieldReadFunction<any>,
+	updatePost?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PostKeySpecifier = ('author' | 'content' | 'createdAt' | 'id' | 'published' | 'title' | 'updatedAt' | 'viewCount' | PostKeySpecifier)[];
 export type PostFieldPolicy = {

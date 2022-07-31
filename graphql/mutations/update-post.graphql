@@ -1,0 +1,17 @@
+mutation UpdatePost($updatePostId: Int!, $data: PostUpdateInput!) {
+  updatePost(id: $updatePostId, data: $data) {
+    id
+    createdAt
+    updatedAt
+    title
+    content
+    published
+    viewCount
+    author {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+}
