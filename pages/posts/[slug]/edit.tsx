@@ -82,7 +82,7 @@ function PostEdit({ post }: InferGetStaticPropsType<typeof getStaticProps>) {
   }
 
   return (
-    <section>
+    <main>
       <h1 className="text-2xl p-5">Update Post</h1>
 
       <form action={`/posts/${post.id}/update`} onSubmit={handleSubmit}>
@@ -124,7 +124,7 @@ function PostEdit({ post }: InferGetStaticPropsType<typeof getStaticProps>) {
           Update
         </button>
       </form>
-    </section>
+    </main>
   );
 }
 

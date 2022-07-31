@@ -30,7 +30,7 @@ function PostCreate() {
   });
 
   return (
-    <section>
+    <main>
       <h1 className="text-2xl p-5">Create Post</h1>
 
       <form action="/posts/create" onSubmit={handleSubmit}>
@@ -71,7 +71,7 @@ function PostCreate() {
           Create
         </button>
       </form>
-    </section>
+    </main>
   );
 }
 

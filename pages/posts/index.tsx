@@ -20,7 +20,7 @@ function Posts() {
   const hasNoData = !data || data?.feed?.length <= 0;
 
   return (
-    <section className="flex">
+    <main className="flex">
       <Sidebar className="shrink-0" />
 
       <section className="p-6 flex-grow">
@@ -51,7 +51,7 @@ function Posts() {
           )}
         </div>
       </section>
-    </section>
+    </main>
   );
 }
 

@@ -16,7 +16,7 @@ export function Home() {
   });
 
   return (
-    <section>
+    <main>
       {loading && <Spinner />}
 
       <header className="py-16 sm:text-center">
@@ -85,7 +85,7 @@ export function Home() {
           ))}
         </div>
       </section>
-    </section>
+    </main>
   );
 }
 
