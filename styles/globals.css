@@ -28,3 +28,7 @@ a {
     background: black;
   }
 }
+
+.writing-vertical {
+  writing-mode: vertical-lr;
+}

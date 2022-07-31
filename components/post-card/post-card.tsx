@@ -1,23 +1,33 @@
 import React from 'react';
+import clsx from 'clsx';
+import Link from 'next/link';
 import { ChatIcon, ClockIcon, EyeIcon } from '@heroicons/react/outline';
 
-import type { PostDetailsFragment } from '@/api';
-import { UserMiniCard } from '../user-card';
+import { PostDetailsFragment, useCurrentUserDetailsQuery } from '@/api';
 import { composeDateTimeDiff } from '@/libs/util';
+import { UserMiniCard } from '../user-card';
+import { FormattedNumber } from 'react-intl';
 
 export interface PostCardProps {
   post: PostDetailsFragment;
 }
 
 function PostCard({ post }: PostCardProps) {
+  const { data } = useCurrentUserDetailsQuery();
+
+  const isPostOwner = post.author?.id === data?.me?.id;
+
   return (
     <article className="flex border-2 rounded-lg">
       <div className="bg-sky-900 rounded-l-lg p-6 basis-80 shrink-0">
         {/* <MetaTags  /> */}
+
         <UserMiniCard user={post.author!}>
           <time className="flex text-white text-sm">
             <ClockIcon width={22} height={22} className="mr-2 text-sky-500" />
+
             <span className="mr-1">posted</span>
+
             <span title={post.createdAt}>{composeDateTimeDiff(post.createdAt)}</span>
           </time>
         </UserMiniCard>
@@ -31,16 +41,53 @@ function PostCard({ post }: PostCardProps) {
         <div className="flex text-gray-600 pt-5">
           <div className="flex ml-auto mr-4">
             <EyeIcon width={22} height={22} className="mr-2 text-sky-500" />
+
             <span className="mr-1">{post.viewCount}</span>
+
             <span>{post.viewCount === 1 ? 'View' : 'Views'}</span>
           </div>
 
           <div className="flex">
             <ChatIcon width={22} height={22} className="mr-2 text-sky-500" />
-            <span className="mr-1">{post.viewCount}</span>
+
+            <span className="mr-1">
+              <FormattedNumber
+                notation="compact"
+                compactDisplay="short"
+                value={post.viewCount}
+              />
+            </span>
             <span>{post.viewCount === 1 ? 'Comment' : 'Comments'}</span>
           </div>
         </div>
+      </div>
+
+      <div className="basis-16 shrink-0 flex flex-col">
+        <Link href={`/posts/${post.id}`} passHref>
+          <a
+            href="pass"
+            className={clsx(
+              'bg-sky-500 text-white flex flex-1 items-center',
+              'justify-center first:rounded-tr-lg last:rounded-br-lg'
+            )}
+          >
+            <span className="writing-vertical">View {isPostOwner ? '' : 'More'}</span>
+          </a>
+        </Link>
+
+        {isPostOwner && (
+          <Link href={`/posts/${post.id}/edit`} passHref>
+            <a
+              href="pass"
+              className={clsx(
+                'bg-sky-900 text-white flex flex-1 items-center',
+                'justify-center first:rounded-tr-lg last:rounded-br-lg'
+              )}
+            >
+              <span className="writing-vertical">Edit</span>
+            </a>
+          </Link>
+        )}
       </div>
     </article>
   );
