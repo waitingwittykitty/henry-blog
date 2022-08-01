@@ -34,8 +34,15 @@ export const capitalize = (stringData: string): string => {
   return stringData.charAt(0).toUpperCase() + stringData.substring(1);
 };
 
-export const composeFullName = (firstName: string, lastName: string): string => {
-  return capitalize(firstName) + ' ' + capitalize(lastName);
+export const composeFullName = (
+  firstName?: string | { firstName?: string | null; lastName?: string | null },
+  lastName?: string
+): string => {
+  if (typeof firstName === 'string') {
+    return capitalize(firstName!) + ' ' + capitalize(lastName!);
+  } else {
+    return capitalize(firstName?.firstName!) + ' ' + capitalize(firstName?.lastName!);
+  }
 };
 
 export const composeDate = (date: Date | string): string => {
@@ -46,6 +53,12 @@ export const composeDate = (date: Date | string): string => {
   }
 
   return DateTime.fromJSDate(composableDate as Date).toLocaleString(DateTime.DATE_FULL);
+};
+
+export const composeDateTime = (date: Date | string): string => {
+  const parsed = DateTime.fromJSDate(new Date(date));
+
+  return parsed.toFormat("LLL d, yyyy 'at' H:mm");
 };
 
 export const composeDateTimeDiff = (date: Date | string): string => {
@@ -67,8 +80,8 @@ export const composeDateTimeDiff = (date: Date | string): string => {
     const roundedDiff = Math.round(Math.abs(diffSize));
 
     if (roundedDiff !== 0) {
-      if (diffSize === 1 || diffSize === -1) {
-        return format.at(diffSize)!;
+      if (roundedDiff === 1 || roundedDiff === -1) {
+        return format.at(roundedDiff)!;
       }
 
       return `${roundedDiff} ${format[0]} ${diffSize < 0 ? 'from now' : 'ago'}`;

@@ -1,0 +1,13 @@
+mutation CreateComment($data: CommentCreateInput!) {
+  createComment(data: $data) {
+    id
+    createdAt
+    updatedAt
+    content
+    author {
+      id
+      firstName
+      lastName
+    }
+  }
+}

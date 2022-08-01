@@ -1,0 +1,9 @@
+fragment CommentDetailsFragment on Comment {
+  id
+  author {
+    ...UserDetailsFragment
+  }
+  content
+  createdAt
+  updatedAt
+}

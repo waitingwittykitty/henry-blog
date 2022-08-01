@@ -1,0 +1,5 @@
+query CommentsByPost($postId: Int!) {
+  commentsByPost(postId: $postId) {
+    ...CommentDetailsFragment
+  }
+}

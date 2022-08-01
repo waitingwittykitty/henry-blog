@@ -6,10 +6,8 @@ fragment PostDetailsFragment on Post {
   content
   published
   viewCount
+  commentCount
   author {
-    id
-    firstName
-    lastName
-    email
+    ...UserDetailsFragment
   }
 }
