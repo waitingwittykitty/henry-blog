@@ -91,10 +91,10 @@ function PostCard({ post }: PostCardProps) {
               <FormattedNumber
                 notation="compact"
                 compactDisplay="short"
-                value={post.viewCount}
+                value={post.commentCount}
               />
             </span>
-            <span>{post.viewCount === 1 ? 'Comment' : 'Comments'}</span>
+            <span>{post.commentCount === 1 ? 'Comment' : 'Comments'}</span>
           </div>
         </div>
       </div>
@@ -113,18 +113,6 @@ function PostCard({ post }: PostCardProps) {
         </Link>
 
         {isPostOwner && (
-          <button
-            className={clsx(
-              'bg-red-900 text-white flex flex-1 items-center',
-              'justify-center first:rounded-tr-lg last:rounded-br-lg'
-            )}
-            onClick={handleDelete}
-          >
-            <span className="writing-vertical">Delete</span>
-          </button>
-        )}
-
-        {isPostOwner && (
           <Link href={`/posts/${post.id}/edit`} passHref>
             <a
               href="pass"
@@ -136,6 +124,18 @@ function PostCard({ post }: PostCardProps) {
               <span className="writing-vertical">Edit</span>
             </a>
           </Link>
+        )}
+
+        {isPostOwner && (
+          <button
+            className={clsx(
+              'bg-red-900 text-white flex flex-1 items-center',
+              'justify-center first:rounded-tr-lg last:rounded-br-lg'
+            )}
+            onClick={handleDelete}
+          >
+            <span className="writing-vertical">Delete</span>
+          </button>
         )}
       </div>
     </article>
