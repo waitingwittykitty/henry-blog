@@ -8,7 +8,7 @@ export const useLogout = () => {
   const onLogout = async () => {
     localStorage.removeItem('henry-blog-token');
     await client.refetchQueries({ include: 'active' });
-    // await client.resetStore();
+    await client.clearStore();
     router.push('/');
   };
 
