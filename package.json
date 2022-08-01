@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "tsc-watch --onSuccess \"next dev\"",
+    "dev": "next dev",
+    "dev-tsc": "tsc-watch --onSuccess \"next dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "prettier --write . && next lint --fix",
@@ -24,6 +25,7 @@
     "graphql": "^16.5.0",
     "next": "12.2.3",
     "react": "18.2.0",
+    "react-confirm-alert": "^3.0.6",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.33.1",
     "react-intl": "^6.0.5",

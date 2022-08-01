@@ -1,21 +1,52 @@
 import React from 'react';
+import { FormattedNumber } from 'react-intl';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { ChatIcon, ClockIcon, EyeIcon } from '@heroicons/react/outline';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
-import { PostDetailsFragment, useCurrentUserDetailsQuery } from '@/api';
+import {
+  FeedDocument,
+  PostDetailsFragment,
+  useCurrentUserDetailsQuery,
+  useDeletePostMutation,
+} from '@/api';
 import { composeDateTimeDiff } from '@/libs/util';
 import { UserMiniCard } from '../user-card';
-import { FormattedNumber } from 'react-intl';
 
 export interface PostCardProps {
   post: PostDetailsFragment;
 }
 
 function PostCard({ post }: PostCardProps) {
+  const router = useRouter();
   const { data } = useCurrentUserDetailsQuery();
+  const [deletePost] = useDeletePostMutation();
 
   const isPostOwner = post.author?.id === data?.me?.id;
+
+  const handleDelete = () => {
+    confirmAlert({
+      title: 'Delete Post',
+      message: 'Are you sure to delete the post?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async () => {
+            await deletePost({
+              variables: { deletePostId: post.id },
+              refetchQueries: [{ query: FeedDocument }],
+            });
+          },
+        },
+        {
+          label: 'No',
+        },
+      ],
+    });
+  };
 
   return (
     <article className="flex border-2 rounded-lg">
@@ -26,7 +57,7 @@ function PostCard({ post }: PostCardProps) {
           <time className="flex text-white text-sm">
             <ClockIcon width={22} height={22} className="mr-2 text-sky-500" />
 
-            <span className="mr-1">posted</span>
+            <span className="mr-1">Posted</span>
 
             <span title={post.createdAt}>{composeDateTimeDiff(post.createdAt)}</span>
           </time>
@@ -34,7 +65,13 @@ function PostCard({ post }: PostCardProps) {
       </div>
 
       <div className="pl-11 pt-5 pr-8 grow">
-        <h3 className="font-semibold text-gray-900 pb-3">{post.title}</h3>
+        <Link href={`/posts/${post.id}?next=${router.pathname}`} passHref>
+          <a>
+            <h3 className="font-semibold text-gray-900 hover:text-sky-900 pb-3">
+              {post.title}
+            </h3>
+          </a>
+        </Link>
 
         <p className="line-clamp-2">{post.content}</p>
 
@@ -63,7 +100,7 @@ function PostCard({ post }: PostCardProps) {
       </div>
 
       <div className="basis-16 shrink-0 flex flex-col">
-        <Link href={`/posts/${post.id}`} passHref>
+        <Link href={`/posts/${post.id}?next=${router.pathname}`} passHref>
           <a
             href="pass"
             className={clsx(
@@ -74,6 +111,18 @@ function PostCard({ post }: PostCardProps) {
             <span className="writing-vertical">View {isPostOwner ? '' : 'More'}</span>
           </a>
         </Link>
+
+        {isPostOwner && (
+          <button
+            className={clsx(
+              'bg-red-900 text-white flex flex-1 items-center',
+              'justify-center first:rounded-tr-lg last:rounded-br-lg'
+            )}
+            onClick={handleDelete}
+          >
+            <span className="writing-vertical">Delete</span>
+          </button>
+        )}
 
         {isPostOwner && (
           <Link href={`/posts/${post.id}/edit`} passHref>
