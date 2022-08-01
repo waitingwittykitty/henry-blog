@@ -43,8 +43,8 @@ function Posts() {
           ) : (
             <ul>
               {data?.feed!.map(post => (
-                <li key={post.id} className="mb-5">
-                  <PostCard post={post} />
+                <li key={post?.id} className="mb-5">
+                  <PostCard post={post!} />
                 </li>
               ))}
             </ul>
