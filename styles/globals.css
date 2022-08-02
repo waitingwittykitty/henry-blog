@@ -33,10 +33,6 @@ a {
   writing-mode: vertical-lr;
 }
 
-.quill > .ql-toolbar:first-child {
-  display: none !important;
-}
-
 .quill > .ql-container > .ql-editor {
   min-height: 300px;
 }

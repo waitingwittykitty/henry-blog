@@ -5,7 +5,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 const nextConfig = withBundleAnalyzer({
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   webpack(config) {
     config.module.rules.push({
