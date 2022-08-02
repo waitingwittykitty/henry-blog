@@ -2,58 +2,23 @@ import React, { useState } from 'react';
 import { clsx } from 'clsx';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
-import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { useRouter } from 'next/router';
-import { ApolloQueryResult } from '@apollo/client';
 import { ArrowCircleLeftIcon } from '@heroicons/react/outline';
 
 import ContentEditor from '@/components/content-editor';
 import {
   FeedDocument,
   PostByIdDocument,
-  PostByIdQuery,
-  PostByIdQueryVariables,
   PostUpdateInput,
+  usePostByIdQuery,
   useUpdatePostMutation,
 } from '@/api';
-import client from '@/libs/apollo';
 import Custom404 from '@/pages/404';
 import { stripTags } from '@/libs/util';
 
-export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: [],
-  fallback: 'blocking',
-});
-
-export const getStaticProps = async (context: GetStaticPropsContext) => {
-  const postId = Number(context.params?.slug!);
-  const response: ApolloQueryResult<PostByIdQuery> = await client.query<
-    PostByIdQuery,
-    PostByIdQueryVariables
-  >({
-    query: PostByIdDocument,
-    variables: {
-      postByIdId: postId,
-    },
-  });
-
-  return {
-    props: {
-      post: response.data.postById,
-    },
-    revalidate: 60,
-  };
-};
-
-function PostEdit({ post }: InferGetStaticPropsType<typeof getStaticProps>) {
+function PostEdit() {
   const router = useRouter();
-  const [updatePostMutation] = useUpdatePostMutation({
-    refetchQueries: [
-      { query: PostByIdDocument, variables: { postByIdId: post?.id } },
-      { query: FeedDocument },
-    ],
-  });
-  const [loading, setLoading] = useState(false);
+  const postId = Number(router.query.slug);
 
   const {
     register,
@@ -62,9 +27,25 @@ function PostEdit({ post }: InferGetStaticPropsType<typeof getStaticProps>) {
     setError,
     clearErrors,
     setValue,
-  } = useForm<PostUpdateInput>({
-    defaultValues: { title: post?.title, content: post?.content },
+  } = useForm<PostUpdateInput>();
+
+  const { data, loading: postLoading } = usePostByIdQuery({
+    variables: { postByIdId: postId },
+    onCompleted: data => {
+      setValue('title', data?.postById?.title!);
+      setValue('content', data?.postById?.content!);
+    },
   });
+
+  const [updatePostMutation] = useUpdatePostMutation({
+    refetchQueries: [
+      { query: PostByIdDocument, variables: { postByIdId: postId } },
+      { query: FeedDocument },
+    ],
+  });
+  const [loading, setLoading] = useState(false);
+
+  const post = data?.postById;
 
   const handleSubmit = submitWrapper(async (formData: PostUpdateInput) => {
     if (post?.id) {
@@ -132,7 +113,9 @@ function PostEdit({ post }: InferGetStaticPropsType<typeof getStaticProps>) {
         </div>
 
         <div>
-          <ContentEditor value={post.content} onChange={handleChangeContent} />
+          {!postLoading && (
+            <ContentEditor value={post.content} onChange={handleChangeContent} />
+          )}
 
           {!!errors.content && (
             <p className="text-sm text-red-500 pt-2">{errors.content.message}</p>
