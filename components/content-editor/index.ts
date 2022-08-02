@@ -1,2 +1,2 @@
-export * from './content-editor';
-export { default } from './content-editor';
+export * from './quill-editor';
+export { default } from './quill-editor';

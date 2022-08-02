@@ -1,32 +1,4 @@
-import { DataProp } from 'editorjs-blocks-react-renderer';
 import { DateTime, DurationUnit } from 'ts-luxon';
-
-export const parseEditorJSData = (jsonStringData?: string): DataProp | null => {
-  if (!jsonStringData) {
-    return null;
-  }
-  let data;
-  try {
-    data = JSON.parse(jsonStringData);
-  } catch (e) {
-    return null;
-  }
-
-  if (!data.blocks?.length) {
-    // No data to render
-    return null;
-  }
-
-  // Path for compatibility with data from older version od EditorJS
-  if (!data.time) {
-    data.time = Date.now().toString();
-  }
-  if (!data.version) {
-    data.version = '2.22.2';
-  }
-
-  return data;
-};
 
 export const capitalize = (stringData: string): string => {
   if (!stringData) return '';
@@ -89,4 +61,10 @@ export const composeDateTimeDiff = (date: Date | string): string => {
   }
 
   return 'right now';
+};
+
+export const stripTags = (html: string): string => {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return div.textContent || div.innerText || '';
 };

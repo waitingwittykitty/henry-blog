@@ -32,3 +32,19 @@ a {
 .writing-vertical {
   writing-mode: vertical-lr;
 }
+
+.quill > .ql-toolbar:first-child {
+  display: none !important;
+}
+
+.quill > .ql-container > .ql-editor {
+  min-height: 300px;
+}
+
+.quill > .ql-toolbar {
+  border-radius: 6px 6px 0 0;
+}
+
+.quill > .ql-container {
+  border-radius: 0 0 6px 6px;
+}

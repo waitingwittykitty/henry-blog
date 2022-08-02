@@ -4,6 +4,7 @@ import { ApolloProvider } from '@apollo/client';
 import { ToastContainer } from 'react-toastify';
 import { IntlProvider } from 'react-intl';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-quill/dist/quill.snow.css';
 
 import { Layout } from '@/components';
 import client from '@/libs/apollo';
