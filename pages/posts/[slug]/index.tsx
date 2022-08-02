@@ -5,7 +5,7 @@ import type { ApolloQueryResult } from '@apollo/client';
 import clsx from 'clsx';
 
 import Custom404 from '@/pages/404';
-// import { RichText } from '@/components';
+import { RichText } from '@/components';
 import apolloClient from '@/libs/apollo';
 import { Post, PostByIdDocument, PostByIdQuery, PostByIdQueryVariables } from '@/api';
 import { ArrowCircleLeftIcon } from '@heroicons/react/outline';
@@ -76,9 +76,8 @@ function PostPage({ post }: InferGetStaticPropsType<typeof getStaticProps>) {
         </article>
 
         {content && (
-          <div className="space-y-6">
-            {/* <RichText jsonStringData={content} /> */}
-            <p>{content}</p>
+          <div className="space-y-6 pb-4 border-b-2 border-gray-200">
+            <RichText value={content} />
           </div>
         )}
 

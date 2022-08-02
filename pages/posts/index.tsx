@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'clsx';
 import Link from 'next/link';
 
 import { useCurrentUserDetailsQuery, useFeedQuery } from '@/api';
@@ -30,7 +31,12 @@ function Posts() {
           <Link
             href={isAnonymousUser ? '/account/login?next=/posts/create' : '/posts/create'}
           >
-            <a className="btn bg-sky-500 hover:bg-sky-600 text-white p-2 rounded-lg">
+            <a
+              className={cx(
+                'w-40 bg-sky-500 hover:bg-sky-600 text-white',
+                'py-2 transition duration-100 rounded-md text-center'
+              )}
+            >
               Create Post
             </a>
           </Link>

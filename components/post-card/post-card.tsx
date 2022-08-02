@@ -13,7 +13,7 @@ import {
   useCurrentUserDetailsQuery,
   useDeletePostMutation,
 } from '@/api';
-import { composeDateTimeDiff } from '@/libs/util';
+import { composeDateTimeDiff, stripTags } from '@/libs/util';
 import { UserMiniCard } from '../user-card';
 
 export interface PostCardProps {
@@ -73,7 +73,7 @@ function PostCard({ post }: PostCardProps) {
           </a>
         </Link>
 
-        <p className="line-clamp-2">{post.content}</p>
+        <p className="line-clamp-2">{stripTags(post.content)}</p>
 
         <div className="flex text-gray-600 pt-5">
           <div className="flex ml-auto mr-4">
@@ -104,8 +104,9 @@ function PostCard({ post }: PostCardProps) {
           <a
             href="pass"
             className={clsx(
-              'bg-sky-500 text-white flex flex-1 items-center',
-              'justify-center first:rounded-tr-lg last:rounded-br-lg'
+              'bg-sky-400 text-white flex flex-1 items-center',
+              'justify-center first:rounded-tr-lg last:rounded-br-lg',
+              'hover:bg-sky-500'
             )}
           >
             <span className="writing-vertical">View {isPostOwner ? '' : 'More'}</span>
@@ -117,8 +118,9 @@ function PostCard({ post }: PostCardProps) {
             <a
               href="pass"
               className={clsx(
-                'bg-sky-900 text-white flex flex-1 items-center',
-                'justify-center first:rounded-tr-lg last:rounded-br-lg'
+                'bg-sky-600 text-white flex flex-1 items-center',
+                'justify-center first:rounded-tr-lg last:rounded-br-lg',
+                'hover:bg-sky-700'
               )}
             >
               <span className="writing-vertical">Edit</span>
@@ -129,8 +131,9 @@ function PostCard({ post }: PostCardProps) {
         {isPostOwner && (
           <button
             className={clsx(
-              'bg-red-900 text-white flex flex-1 items-center',
-              'justify-center first:rounded-tr-lg last:rounded-br-lg'
+              'bg-sky-800 text-white flex flex-1 items-center',
+              'justify-center first:rounded-tr-lg last:rounded-br-lg',
+              'hover:bg-sky-900'
             )}
             onClick={handleDelete}
           >
