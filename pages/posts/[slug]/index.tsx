@@ -1,13 +1,19 @@
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { ApolloQueryResult } from '@apollo/client';
 import clsx from 'clsx';
 
 import Custom404 from '@/pages/404';
 import { RichText } from '@/components';
 import apolloClient from '@/libs/apollo';
-import { Post, PostByIdDocument, PostByIdQuery, PostByIdQueryVariables } from '@/api';
+import {
+  Post,
+  PostByIdDocument,
+  PostByIdQuery,
+  PostByIdQueryVariables,
+  useIncreasePostViewCountMutation,
+} from '@/api';
 import { ArrowCircleLeftIcon } from '@heroicons/react/outline';
 import PostMeta from '@/components/post-meta';
 import CommentList from '@/components/comment-list';
@@ -27,6 +33,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     variables: {
       postByIdId: postId,
     },
+    fetchPolicy: 'no-cache',
   });
 
   return {
@@ -39,6 +46,13 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
 function PostPage({ post }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
+  const [increaseViewCount] = useIncreasePostViewCountMutation();
+
+  useEffect(() => {
+    if (post) {
+      increaseViewCount({ variables: { incrementPostViewCountId: post?.id! } });
+    }
+  }, [increaseViewCount, post]);
 
   if (!post?.id) {
     return <Custom404 />;
